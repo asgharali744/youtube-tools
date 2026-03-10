@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CreatorToolHub – Free YouTube Tools for Content Creators</title>
+<meta name="description" content="Free YouTube tools: thumbnail downloader, title generator, tag generator, description generator. Grow your channel with CreatorToolHub.">
+<meta name="keywords" content="YouTube thumbnail downloader, YouTube title generator, YouTube tag generator, YouTube description generator, free YouTube tools">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="CreatorToolHub – Free YouTube Tools">
+<meta property="og:description" content="Download thumbnails, generate titles, tags & descriptions. Free tools for YouTube creators.">
+<meta property="og:type" content="website">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg:#0b0b0f; --bg2:#111118; --bg3:#17171f; --bg4:#1e1e2a; --card:#151520;
+  --border:#252535; --border2:#32324a; --accent:#7c3aed; --accentL:#9d5df0;
+  --accentLL:#b580f5; --cyan:#06b6d4; --green:#10b981; --red:#ef4444;
+  --text:#e8e8f0; --text2:#9090aa; --text3:#55556a;
+  --grad:linear-gradient(135deg,#7c3aed,#a855f7,#06b6d4);
+  --grad-btn:linear-gradient(135deg,#6d28d9,#7c3aed);
+  --grad-card:linear-gradient(160deg,rgba(124,58,237,.08),rgba(6,182,212,.04));
+  --glow:0 0 40px rgba(124,58,237,.22); --shadow:0 20px 60px rgba(0,0,0,.55);
+  --r:16px; --rsm:10px; --t:.25s cubic-bezier(.4,0,.2,1);
+}
+html { scroll-behavior: smooth; }
+body { font-family:'Segoe UI',system-ui,-apple-system,sans-serif; background:var(--bg); color:var(--text); line-height:1.6; overflow-x:hidden; }
+::-webkit-scrollbar { width:5px; }
+::-webkit-scrollbar-track { background:var(--bg); }
+::-webkit-scrollbar-thumb { background:var(--accent); border-radius:3px; }
+::selection { background:rgba(124,58,237,.35); }
+
+.container { max-width:1160px; margin:0 auto; padding:0 24px; }
+.grad-text { background:var(--grad); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+
+/* ── ORBS ── */
+.bg-orbs { position:fixed; inset:0; pointer-events:none; z-index:0; overflow:hidden; }
+.orb { position:absolute; border-radius:50%; filter:blur(90px); opacity:.12; animation:orbFloat 14s ease-in-out infinite alternate; }
+.orb-1 { width:600px; height:600px; background:#7c3aed; top:-200px; left:-150px; }
+.orb-2 { width:450px; height:450px; background:#06b6d4; bottom:-150px; right:-100px; animation-delay:-5s; }
+.orb-3 { width:300px; height:300px; background:#ec4899; top:50%; left:50%; transform:translate(-50%,-50%); animation-delay:-9s; }
+@keyframes orbFloat { from{transform:translateY(0) scale(1)} to{transform:translateY(-28px) scale(1.05)} }
+
+/* ── NAV ── */
+.nav { position:sticky; top:0; z-index:200; background:rgba(11,11,15,.9); backdrop-filter:blur(22px); border-bottom:1px solid var(--border); }
+.nav-inner { display:flex; align-items:center; justify-content:space-between; height:64px; }
+.logo { font-size:1.22rem; font-weight:900; text-decoration:none; display:flex; align-items:center; gap:9px; letter-spacing:-.4px; }
+.logo-icon { width:36px; height:36px; border-radius:10px; background:var(--grad-btn); display:flex; align-items:center; justify-content:center; font-size:1rem; flex-shrink:0; box-shadow:0 4px 14px rgba(124,58,237,.4); }
+.nav-links { display:flex; align-items:center; gap:4px; }
+.nav-links a { color:var(--text2); text-decoration:none; padding:7px 13px; border-radius:8px; font-size:.875rem; font-weight:500; transition:all var(--t); }
+.nav-links a:hover { color:var(--text); background:var(--bg4); }
+.nav-cta { background:var(--grad-btn) !important; color:#fff !important; font-weight:700 !important; box-shadow:0 4px 16px rgba(124,58,237,.35); border-radius:8px; }
+.nav-cta:hover { opacity:.9; transform:translateY(-1px); }
+.hamburger { display:none; background:none; border:none; color:var(--text); cursor:pointer; font-size:1.4rem; padding:4px; }
+.mobile-nav { display:none; flex-direction:column; gap:4px; padding:12px 16px; border-bottom:1px solid var(--border); background:var(--bg2); }
+.mobile-nav.open { display:flex; }
+.mobile-nav a { color:var(--text2); text-decoration:none; padding:10px 14px; border-radius:9px; font-size:.9rem; transition:all var(--t); }
+.mobile-nav a:hover { background:var(--bg4); color:var(--text); }
+
+/* ── HERO ── */
+.hero { position:relative; z-index:1; padding:88px 24px 72px; text-align:center; }
+.hero-badge { display:inline-flex; align-items:center; gap:7px; background:rgba(124,58,237,.13); border:1px solid rgba(124,58,237,.3); color:var(--accentLL); font-size:.75rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; padding:6px 16px; border-radius:100px; margin-bottom:24px; animation:fadeUp .6s ease both; }
+.hero h1 { font-size:clamp(2rem,5.5vw,3.8rem); font-weight:900; line-height:1.08; letter-spacing:-1.5px; margin-bottom:18px; animation:fadeUp .6s ease .1s both; }
+.hero-sub { color:var(--text2); font-size:clamp(.95rem,2.2vw,1.15rem); max-width:580px; margin:0 auto 40px; line-height:1.65; animation:fadeUp .6s ease .18s both; }
+.hero-btns { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; animation:fadeUp .6s ease .26s both; }
+.btn { display:inline-flex; align-items:center; gap:8px; padding:13px 26px; border-radius:12px; font-size:.92rem; font-weight:700; cursor:pointer; border:none; transition:all var(--t); text-decoration:none; }
+.btn-primary { background:var(--grad-btn); color:#fff; box-shadow:0 6px 22px rgba(124,58,237,.42); }
+.btn-primary:hover { transform:translateY(-2px); box-shadow:0 10px 32px rgba(124,58,237,.55); }
+.btn-ghost { background:var(--bg4); color:var(--text); border:1px solid var(--border); }
+.btn-ghost:hover { background:var(--border); transform:translateY(-2px); }
+.hero-stats { display:flex; gap:44px; justify-content:center; flex-wrap:wrap; margin-top:56px; animation:fadeUp .6s ease .36s both; }
+.stat { text-align:center; }
+.stat-n { font-size:2rem; font-weight:900; line-height:1; margin-bottom:4px; }
+.stat-l { font-size:.72rem; color:var(--text3); font-weight:600; text-transform:uppercase; letter-spacing:.07em; }
+
+/* ── SECTIONS ── */
+.section { padding:64px 0; position:relative; z-index:1; }
+.section-sep { height:1px; background:var(--border); }
+.section-alt { background:var(--bg2); }
+.s-tag { display:inline-block; background:rgba(124,58,237,.12); color:var(--accentL); font-size:.7rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; padding:5px 13px; border-radius:100px; margin-bottom:11px; }
+.s-title { font-size:clamp(1.5rem,3.5vw,2.2rem); font-weight:900; letter-spacing:-.5px; margin-bottom:12px; }
+.s-sub { color:var(--text2); max-width:500px; margin:0 auto; font-size:.92rem; }
+.s-head { text-align:center; margin-bottom:48px; }
+
+/* ── TOOLS GRID ── */
+.tools-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:20px; }
+.tool-card { background:var(--card); border:1px solid var(--border); border-radius:var(--r); padding:28px 24px; cursor:pointer; transition:all .3s; position:relative; overflow:hidden; text-decoration:none; color:inherit; display:block; }
+.tool-card::before { content:''; position:absolute; inset:0; background:var(--grad-card); opacity:0; transition:opacity .3s; }
+.tool-card:hover { transform:translateY(-5px); border-color:var(--accent); box-shadow:var(--glow); }
+.tool-card:hover::before { opacity:1; }
+.tc-icon { width:54px; height:54px; border-radius:14px; background:rgba(124,58,237,.15); border:1px solid rgba(124,58,237,.22); display:flex; align-items:center; justify-content:center; font-size:1.5rem; margin-bottom:18px; transition:transform .3s; }
+.tool-card:hover .tc-icon { transform:scale(1.08); }
+.tc-title { font-size:1.05rem; font-weight:800; margin-bottom:8px; }
+.tc-desc { color:var(--text2); font-size:.84rem; line-height:1.55; }
+.tc-arrow { position:absolute; bottom:20px; right:20px; color:var(--text3); font-size:1.1rem; transition:all .3s; }
+.tool-card:hover .tc-arrow { color:var(--accentL); transform:translateX(4px); }
+
+/* ── WORKSPACE ── */
+.workspace { padding:48px 0 72px; position:relative; z-index:1; }
+.ws-tabs { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:32px; }
+.ws-tab { padding:9px 20px; border-radius:100px; font-size:.84rem; font-weight:700; cursor:pointer; border:1px solid var(--border); background:transparent; color:var(--text2); transition:all var(--t); }
+.ws-tab.active { background:var(--grad-btn); color:#fff; border-color:transparent; box-shadow:0 4px 16px rgba(124,58,237,.35); }
+.ws-tab:not(.active):hover { border-color:var(--accent); color:var(--text); }
+.ws-panel { display:none; animation:fadeUp .4s ease both; }
+.ws-panel.active { display:block; }
+.panel-card { background:var(--card); border:1px solid var(--border); border-radius:var(--r); padding:36px; }
+.panel-hdr { display:flex; align-items:center; gap:16px; padding-bottom:24px; border-bottom:1px solid var(--border); margin-bottom:28px; }
+.ph-icon { width:52px; height:52px; border-radius:14px; flex-shrink:0; background:var(--grad-btn); display:flex; align-items:center; justify-content:center; font-size:1.3rem; box-shadow:0 6px 20px rgba(124,58,237,.38); }
+.ph-title { font-size:1.25rem; font-weight:900; letter-spacing:-.3px; }
+.ph-sub { color:var(--text2); font-size:.85rem; margin-top:2px; }
+
+/* ── FORM ── */
+.fgrp { margin-bottom:18px; }
+.frow { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+label { display:block; font-size:.75rem; font-weight:700; color:var(--text2); margin-bottom:7px; letter-spacing:.06em; text-transform:uppercase; }
+input, select, textarea { width:100%; background:var(--bg3); border:1.5px solid var(--border); color:var(--text); padding:12px 16px; border-radius:10px; font-size:.9rem; font-family:inherit; outline:none; transition:border-color var(--t),box-shadow var(--t); }
+input:focus, select:focus, textarea:focus { border-color:var(--accent); box-shadow:0 0 0 3px rgba(124,58,237,.15); }
+input::placeholder, textarea::placeholder { color:var(--text3); }
+select option { background:var(--bg3); }
+textarea { resize:vertical; min-height:96px; }
+
+/* ── ALERT ── */
+.alert { display:none; align-items:center; gap:9px; background:rgba(239,68,68,.1); border:1px solid rgba(239,68,68,.28); color:#fca5a5; padding:11px 16px; border-radius:9px; font-size:.85rem; font-weight:600; margin-bottom:16px; }
+.alert.show { display:flex; }
+
+/* ── LOADER ── */
+.loader { display:none; align-items:center; justify-content:center; gap:12px; padding:44px; color:var(--text2); font-size:.9rem; }
+.loader.show { display:flex; }
+.spin { width:26px; height:26px; border-radius:50%; border:3px solid var(--border); border-top-color:var(--accent); animation:spin .65s linear infinite; flex-shrink:0; }
+
+/* ── RESULT ── */
+.result { margin-top:28px; }
+.result-hdr { font-size:.72rem; font-weight:800; color:var(--text3); text-transform:uppercase; letter-spacing:.08em; margin-bottom:14px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; }
+
+/* ── THUMBNAILS ── */
+.thumb-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:18px; }
+.tcard { background:var(--bg3); border:1px solid var(--border); border-radius:14px; overflow:hidden; transition:all .3s; }
+.tcard:hover { border-color:var(--accent); transform:translateY(-4px); box-shadow:var(--glow); }
+.tcard-img { width:100%; aspect-ratio:16/9; object-fit:cover; background:#000; display:block; }
+.tcard-body { padding:12px 14px 14px; }
+.tcard-q { font-size:.75rem; font-weight:800; color:var(--accentL); margin-bottom:2px; }
+.tcard-sz { font-size:.68rem; color:var(--text3); margin-bottom:12px; }
+.tcard-btns { display:flex; gap:7px; }
+.tdl-btn { flex:1; background:var(--grad-btn); color:#fff; border:none; padding:9px 0; border-radius:8px; font-size:.78rem; font-weight:700; cursor:pointer; transition:all .25s; display:flex; align-items:center; justify-content:center; gap:5px; }
+.tdl-btn:hover { opacity:.88; transform:translateY(-1px); }
+.tdl-btn:disabled { opacity:.5; cursor:not-allowed; transform:none; }
+.topen-btn { background:var(--bg4); color:var(--text2); border:1px solid var(--border); padding:9px 12px; border-radius:8px; font-size:.82rem; cursor:pointer; transition:all .25s; }
+.topen-btn:hover { background:var(--border); color:var(--text); }
+
+/* ── TITLES ── */
+.titles-list { display:flex; flex-direction:column; gap:9px; }
+.title-item { background:var(--bg3); border:1px solid var(--border); border-radius:9px; padding:13px 16px; display:flex; align-items:center; gap:12px; cursor:pointer; transition:all .22s; }
+.title-item:hover { border-color:var(--accent); background:var(--bg4); }
+.ti-num { font-size:.72rem; font-weight:800; color:var(--accentL); min-width:20px; }
+.ti-text { flex:1; font-size:.9rem; line-height:1.4; }
+.ti-copy { color:var(--text3); font-size:.85rem; transition:color .2s; flex-shrink:0; }
+.title-item:hover .ti-copy { color:var(--accentL); }
+
+/* ── TAGS ── */
+.tags-cloud { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:18px; }
+.tag-pill { background:rgba(124,58,237,.12); border:1px solid rgba(124,58,237,.25); color:var(--accentLL); padding:6px 14px; border-radius:100px; font-size:.8rem; font-weight:600; cursor:pointer; transition:all .2s; }
+.tag-pill:hover { background:rgba(124,58,237,.26); transform:scale(1.04); }
+.tag-count { font-size:.75rem; color:var(--text3); margin-bottom:12px; }
+
+/* ── DESCRIPTION ── */
+.desc-box { background:var(--bg3); border:1px solid var(--border); border-radius:12px; padding:22px; white-space:pre-wrap; font-size:.875rem; line-height:1.72; color:var(--text2); max-height:480px; overflow-y:auto; }
+
+/* ── BUTTONS ── */
+.btn-row { display:flex; gap:10px; flex-wrap:wrap; margin-top:16px; }
+.action-btn { display:inline-flex; align-items:center; gap:7px; padding:10px 20px; border-radius:9px; font-size:.83rem; font-weight:700; cursor:pointer; border:none; transition:all var(--t); }
+.ab-primary { background:var(--grad-btn); color:#fff; box-shadow:0 4px 16px rgba(124,58,237,.32); }
+.ab-primary:hover { opacity:.88; transform:translateY(-1px); }
+.ab-outline { background:transparent; color:var(--accentL); border:1px solid rgba(124,58,237,.4); }
+.ab-outline:hover { background:rgba(124,58,237,.1); }
+.ab-ghost { background:var(--bg4); color:var(--text2); border:1px solid var(--border); }
+.ab-ghost:hover { background:var(--border); color:var(--text); }
+.char-info { font-size:.72rem; color:var(--text3); margin-top:8px; }
+
+/* ── HOW IT WORKS ── */
+.how-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px; }
+.how-card { background:var(--card); border:1px solid var(--border); border-radius:var(--r); padding:28px 22px; text-align:center; transition:all .3s; }
+.how-card:hover { border-color:var(--accent); transform:translateY(-4px); }
+.how-n { width:48px; height:48px; border-radius:50%; background:var(--grad-btn); color:#fff; font-weight:900; font-size:1.1rem; display:flex; align-items:center; justify-content:center; margin:0 auto 16px; box-shadow:0 6px 18px rgba(124,58,237,.4); }
+.how-card h3 { font-size:1rem; font-weight:800; margin-bottom:8px; }
+.how-card p { color:var(--text2); font-size:.84rem; line-height:1.55; }
+
+/* ── FAQ ── */
+.faq-list { max-width:780px; margin:0 auto; display:flex; flex-direction:column; gap:10px; }
+.faq-item { background:var(--card); border:1px solid var(--border); border-radius:var(--rsm); overflow:hidden; transition:border-color .25s; }
+.faq-item.open { border-color:var(--accent); }
+.faq-q { padding:18px 20px; cursor:pointer; display:flex; justify-content:space-between; align-items:center; font-weight:700; font-size:.94rem; user-select:none; transition:background .2s; }
+.faq-q:hover { background:var(--bg4); }
+.faq-chev { transition:transform .3s; color:var(--text3); font-size:.9rem; }
+.faq-item.open .faq-chev { transform:rotate(180deg); }
+.faq-a { max-height:0; overflow:hidden; transition:max-height .38s ease; color:var(--text2); font-size:.875rem; line-height:1.65; }
+.faq-a-inner { padding:0 20px 18px; }
+.faq-item.open .faq-a { max-height:240px; }
+
+/* ── BLOG ── */
+.blog-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(270px,1fr)); gap:20px; }
+.blog-card { background:var(--card); border:1px solid var(--border); border-radius:var(--r); padding:26px; transition:all .3s; cursor:pointer; }
+.blog-card:hover { border-color:var(--accent); transform:translateY(-4px); }
+.blog-tag { font-size:.68rem; font-weight:800; text-transform:uppercase; letter-spacing:.08em; color:var(--accentL); margin-bottom:10px; }
+.blog-card h3 { font-size:1rem; font-weight:800; margin-bottom:8px; line-height:1.4; }
+.blog-card p { color:var(--text2); font-size:.82rem; line-height:1.5; }
+.blog-date { color:var(--text3); font-size:.72rem; margin-top:14px; }
+
+/* ── AD ── */
+.ad-box { background:var(--bg2); border:1px dashed var(--border2); border-radius:var(--rsm); padding:22px; text-align:center; color:var(--text3); font-size:.78rem; margin:10px 0; }
+
+/* ── FOOTER ── */
+.footer { background:var(--bg2); border-top:1px solid var(--border); padding:52px 24px 28px; position:relative; z-index:1; }
+.footer-grid { max-width:1160px; margin:0 auto 44px; display:grid; grid-template-columns:2fr repeat(3,1fr); gap:40px; }
+.footer-brand-desc { color:var(--text2); font-size:.85rem; margin-top:12px; line-height:1.6; }
+.footer-col h4 { font-size:.83rem; font-weight:800; margin-bottom:14px; letter-spacing:.04em; }
+.footer-col a { display:block; color:var(--text3); font-size:.84rem; text-decoration:none; margin-bottom:9px; transition:color .2s; }
+.footer-col a:hover { color:var(--accentL); }
+.footer-bottom { max-width:1160px; margin:0 auto; border-top:1px solid var(--border); padding-top:22px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; font-size:.78rem; color:var(--text3); }
+
+/* ── TOAST ── */
+.toast { position:fixed; bottom:22px; right:22px; z-index:9999; background:var(--bg4); border:1px solid var(--border); color:var(--text); padding:12px 20px; border-radius:11px; font-size:.875rem; font-weight:600; box-shadow:var(--shadow); display:flex; align-items:center; gap:9px; transform:translateY(70px) scale(.92); opacity:0; transition:all .38s cubic-bezier(.34,1.56,.64,1); pointer-events:none; max-width:320px; }
+.toast.show { transform:translateY(0) scale(1); opacity:1; }
+.toast.ok { border-color:rgba(16,185,129,.4); }
+.toast.err { border-color:rgba(239,68,68,.4); }
+.toast.inf { border-color:rgba(124,58,237,.4); }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
+@keyframes spin { to{transform:rotate(360deg)} }
+
+/* ── RESPONSIVE ── */
+@media(max-width:820px){ .footer-grid{grid-template-columns:1fr 1fr;} }
+@media(max-width:640px){
+  .nav-links{display:none;} .hamburger{display:block;}
+  .frow{grid-template-columns:1fr;} .panel-card{padding:22px 16px;}
+  .thumb-grid{grid-template-columns:1fr 1fr;} .footer-grid{grid-template-columns:1fr;}
+  .hero-stats{gap:26px;} .hero{padding:60px 20px 52px;}
+  .btn-row{flex-direction:column;} .action-btn{justify-content:center;}
+}
+@media(max-width:420px){ .thumb-grid{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+
+<div class="bg-orbs" aria-hidden="true">
+  <div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <span id="t-icon">✅</span><span id="t-msg">Copied!</span>
+</div>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="container nav-inner">
+    <a class="logo" href="#"><div class="logo-icon">🎬</div><span class="grad-text">CreatorToolHub</span></a>
+    <div class="nav-links">
+      <a href="#tools-grid">Tools</a>
+      <a href="#workspace">Workspace</a>
+      <a href="#how">How It Works</a>
+      <a href="#blog">Blog</a>
+      <a href="#faq">FAQ</a>
+      <a href="#workspace" class="nav-cta">Start Free →</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu">☰</button>
+  </div>
+</nav>
+<div class="mobile-nav" id="mobileNav">
+  <a href="#tools-grid">🛠 Tools</a>
+  <a href="#workspace">⚡ Workspace</a>
+  <a href="#how">📖 How It Works</a>
+  <a href="#blog">📝 Blog</a>
+  <a href="#faq">❓ FAQ</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">⚡ 100% Free · No Sign-up · Instant Results</div>
+  <h1>The Ultimate<br><span class="grad-text">YouTube Creator</span> Toolkit</h1>
+  <p class="hero-sub">Download thumbnails, generate viral titles, SEO-optimized tags, and complete descriptions — everything a creator needs in one place.</p>
+  <div class="hero-btns">
+    <a href="#workspace" class="btn btn-primary">🚀 Open Tools Free</a>
+    <a href="#how" class="btn btn-ghost">📖 How It Works</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-n grad-text">4</div><div class="stat-l">Free Tools</div></div>
+    <div class="stat"><div class="stat-n grad-text">5</div><div class="stat-l">Thumb Qualities</div></div>
+    <div class="stat"><div class="stat-n grad-text">∞</div><div class="stat-l">Uses / Day</div></div>
+    <div class="stat"><div class="stat-n grad-text">0$</div><div class="stat-l">Cost Forever</div></div>
+  </div>
+</section>
+
+<div class="container"><div class="ad-box">📢 Advertisement — Google AdSense Leaderboard 728×90</div></div>
+
+<!-- TOOLS GRID -->
+<section class="section" id="tools-grid">
+  <div class="container">
+    <div class="s-head">
+      <div class="s-tag">🛠 Free Tools</div>
+      <h2 class="s-title">Everything You Need to Grow on YouTube</h2>
+      <p class="s-sub">Professional-grade tools used by top creators — 100% free, no account needed.</p>
+    </div>
+    <div class="tools-grid">
+      <a class="tool-card" href="#workspace" onclick="switchTab('thumb')">
+        <div class="tc-icon">🖼️</div><div class="tc-title">Thumbnail Downloader</div>
+        <div class="tc-desc">Download YouTube thumbnails in all 5 quality sizes instantly. HD included.</div>
+        <div class="tc-arrow">→</div>
+      </a>
+      <a class="tool-card" href="#workspace" onclick="switchTab('title')">
+        <div class="tc-icon">✍️</div><div class="tc-title">Title Generator</div>
+        <div class="tc-desc">Generate 10 viral, click-worthy YouTube titles tuned to your topic & audience.</div>
+        <div class="tc-arrow">→</div>
+      </a>
+      <a class="tool-card" href="#workspace" onclick="switchTab('tag')">
+        <div class="tc-icon">🏷️</div><div class="tc-title">Tag Generator</div>
+        <div class="tc-desc">Get 20 SEO-optimized tags to maximize your video's discoverability.</div>
+        <div class="tc-arrow">→</div>
+      </a>
+      <a class="tool-card" href="#workspace" onclick="switchTab('desc')">
+        <div class="tc-icon">📝</div><div class="tc-title">Description Generator</div>
+        <div class="tc-desc">Create full descriptions with hooks, summaries, hashtags, and CTAs.</div>
+        <div class="tc-arrow">→</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="section-sep"></div>
+
+<!-- WORKSPACE -->
+<section class="workspace" id="workspace">
+  <div class="container">
+    <div class="ws-tabs" id="wsTabs">
+      <button class="ws-tab active" data-tab="thumb">🖼️ Thumbnail</button>
+      <button class="ws-tab" data-tab="title">✍️ Title Gen</button>
+      <button class="ws-tab" data-tab="tag">🏷️ Tag Gen</button>
+      <button class="ws-tab" data-tab="desc">📝 Description</button>
+    </div>
+
+    <!-- THUMBNAIL PANEL -->
+    <div class="ws-panel active" id="panel-thumb">
+      <div class="panel-card">
+        <div class="panel-hdr">
+          <div class="ph-icon">🖼️</div>
+          <div><div class="ph-title">YouTube Thumbnail Downloader</div><div class="ph-sub">Paste any YouTube URL — get all 5 quality sizes instantly</div></div>
+        </div>
+        <div class="alert" id="thumb-err">⚠️ <span>Please enter a valid YouTube video URL.</span></div>
+        <div class="fgrp">
+          <label>YouTube Video URL</label>
+          <input type="url" id="thumbUrl" placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ" />
+        </div>
+        <div class="btn-row">
+          <button class="action-btn ab-primary" id="thumbGenBtn">🔍 Generate Thumbnails</button>
+          <button class="action-btn ab-ghost" id="thumbPasteBtn">📋 Paste URL</button>
+          <button class="action-btn ab-ghost" id="thumbClearBtn">✕ Clear</button>
+        </div>
+        <div class="loader" id="thumb-loader"><div class="spin"></div> Fetching thumbnails…</div>
+        <div class="result" id="thumb-result"></div>
+      </div>
+    </div>
+
+    <!-- TITLE PANEL -->
+    <div class="ws-panel" id="panel-title">
+      <div class="panel-card">
+        <div class="panel-hdr">
+          <div class="ph-icon">✍️</div>
+          <div><div class="ph-title">YouTube Title Generator</div><div class="ph-sub">Generate 10 viral, AI-style YouTube titles tailored to your video</div></div>
+        </div>
+        <div class="alert" id="title-err">⚠️ <span>Please enter a video topic.</span></div>
+        <div class="frow">
+          <div class="fgrp"><label>Video Topic</label><input type="text" id="titleTopic" placeholder="e.g. How to build a passive income stream" /></div>
+          <div class="fgrp"><label>Target Audience</label><input type="text" id="titleAudience" placeholder="e.g. Beginners, Students, Entrepreneurs" /></div>
+        </div>
+        <div class="fgrp">
+          <label>Tone / Style</label>
+          <select id="titleTone">
+            <option value="viral">🔥 Viral & Clickbait</option>
+            <option value="educational">📚 Educational & Informative</option>
+            <option value="entertaining">🎉 Entertaining & Fun</option>
+            <option value="howto">🔧 How-To & Tutorial</option>
+            <option value="listicle">📋 Top List (Listicle)</option>
+            <option value="motivational">💪 Motivational & Inspiring</option>
+          </select>
+        </div>
+        <div class="btn-row">
+          <button class="action-btn ab-primary" id="titleGenBtn">⚡ Generate 10 Titles</button>
+          <button class="action-btn ab-ghost" id="titleClearBtn">✕ Clear</button>
+        </div>
+        <div class="loader" id="title-loader"><div class="spin"></div> Generating titles…</div>
+        <div class="result" id="title-result"></div>
+      </div>
+    </div>
+
+    <!-- TAG PANEL -->
+    <div class="ws-panel" id="panel-tag">
+      <div class="panel-card">
+        <div class="panel-hdr">
+          <div class="ph-icon">🏷️</div>
+          <div><div class="ph-title">YouTube Tag Generator</div><div class="ph-sub">Generate 20 SEO-optimized tags to boost your video's reach</div></div>
+        </div>
+        <div class="alert" id="tag-err">⚠️ <span>Please enter a keyword.</span></div>
+        <div class="frow">
+          <div class="fgrp"><label>Main Keyword / Topic</label><input type="text" id="tagKw" placeholder="e.g. digital marketing, coding, fitness" /></div>
+          <div class="fgrp">
+            <label>Category</label>
+            <select id="tagCat">
+              <option value="general">General</option>
+              <option value="tech">Technology & Coding</option>
+              <option value="gaming">Gaming</option>
+              <option value="finance">Finance & Business</option>
+              <option value="health">Health & Fitness</option>
+              <option value="food">Food & Cooking</option>
+              <option value="travel">Travel & Lifestyle</option>
+              <option value="education">Education & Learning</option>
+              <option value="music">Music & Entertainment</option>
+              <option value="beauty">Beauty & Fashion</option>
+            </select>
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="action-btn ab-primary" id="tagGenBtn">🏷️ Generate 20 Tags</button>
+          <button class="action-btn ab-ghost" id="tagClearBtn">✕ Clear</button>
+        </div>
+        <div class="loader" id="tag-loader"><div class="spin"></div> Generating tags…</div>
+        <div class="result" id="tag-result"></div>
+      </div>
+    </div>
+
+    <!-- DESCRIPTION PANEL -->
+    <div class="ws-panel" id="panel-desc">
+      <div class="panel-card">
+        <div class="panel-hdr">
+          <div class="ph-icon">📝</div>
+          <div><div class="ph-title">YouTube Description Generator</div><div class="ph-sub">Create a complete, SEO-optimized YouTube description in seconds</div></div>
+        </div>
+        <div class="alert" id="desc-err">⚠️ <span>Please enter a video topic.</span></div>
+        <div class="frow">
+          <div class="fgrp"><label>Video Topic</label><input type="text" id="descTopic" placeholder="e.g. 10 ways to save money in 2025" /></div>
+          <div class="fgrp"><label>Channel Name (optional)</label><input type="text" id="descChannel" placeholder="e.g. MoneyMindset" /></div>
+        </div>
+        <div class="frow">
+          <div class="fgrp"><label>Keywords (comma-separated)</label><input type="text" id="descKw" placeholder="e.g. save money, budget tips, frugal living" /></div>
+          <div class="fgrp">
+            <label>Video Type</label>
+            <select id="descType">
+              <option value="tutorial">Tutorial / How-To</option>
+              <option value="review">Review</option>
+              <option value="vlog">Vlog / Story</option>
+              <option value="list">Top List / Listicle</option>
+              <option value="interview">Interview / Podcast</option>
+              <option value="challenge">Challenge</option>
+              <option value="documentary">Documentary / Deep-Dive</option>
+            </select>
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="action-btn ab-primary" id="descGenBtn">📝 Generate Description</button>
+          <button class="action-btn ab-ghost" id="descClearBtn">✕ Clear</button>
+        </div>
+        <div class="loader" id="desc-loader"><div class="spin"></div> Generating description…</div>
+        <div class="result" id="desc-result"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="container"><div class="ad-box">📢 Advertisement — Google AdSense Rectangle 300×250</div></div>
+
+<!-- HOW IT WORKS -->
+<div class="section-sep"></div>
+<section class="section section-alt" id="how">
+  <div class="container">
+    <div class="s-head">
+      <div class="s-tag">📖 Simple Process</div>
+      <h2 class="s-title">How It Works</h2>
+      <p class="s-sub">Get professional results in four easy steps — no account, no payment needed.</p>
+    </div>
+    <div class="how-grid">
+      <div class="how-card"><div class="how-n">1</div><h3>Choose a Tool</h3><p>Select any of the 4 free tools — Thumbnail Downloader, Title Generator, Tag Generator, or Description Generator.</p></div>
+      <div class="how-card"><div class="how-n">2</div><h3>Enter Your Details</h3><p>Paste a YouTube URL or type your video topic, target audience, and preferred style or tone.</p></div>
+      <div class="how-card"><div class="how-n">3</div><h3>Generate Instantly</h3><p>Hit generate and get professional results — thumbnails, titles, tags or full descriptions — in under a second.</p></div>
+      <div class="how-card"><div class="how-n">4</div><h3>Copy & Publish</h3><p>Download thumbnails or copy text results with one click — then paste straight into YouTube Studio.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOG -->
+<div class="section-sep"></div>
+<section class="section" id="blog">
+  <div class="container">
+    <div class="s-head">
+      <div class="s-tag">📝 Blog</div>
+      <h2 class="s-title">Creator Tips & Guides</h2>
+      <p class="s-sub">Learn how to grow your YouTube channel with our expert articles.</p>
+    </div>
+    <div class="blog-grid">
+      <div class="blog-card"><div class="blog-tag">📈 Growth</div><h3>How to Create YouTube Thumbnails That Get 10× More Clicks</h3><p>Discover the design psychology behind high-CTR thumbnails and how top creators use contrast, faces, and text.</p><div class="blog-date">📅 January 15, 2025</div></div>
+      <div class="blog-card"><div class="blog-tag">🔍 SEO</div><h3>YouTube SEO in 2025: The Complete Tag Strategy Guide</h3><p>Master YouTube's algorithm with the right tags, keyword placement, and description strategy to rank #1.</p><div class="blog-date">📅 January 22, 2025</div></div>
+      <div class="blog-card"><div class="blog-tag">✍️ Copywriting</div><h3>Writing YouTube Descriptions That Rank and Convert Viewers</h3><p>Your description is prime real estate. Here's how to write one that satisfies both the algorithm and your audience.</p><div class="blog-date">📅 January 30, 2025</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<div class="section-sep"></div>
+<section class="section section-alt" id="faq">
+  <div class="container">
+    <div class="s-head">
+      <div class="s-tag">❓ FAQ</div>
+      <h2 class="s-title">Frequently Asked Questions</h2>
+    </div>
+    <div class="faq-list" id="faqList">
+      <div class="faq-item"><div class="faq-q">Is CreatorToolHub completely free? <span class="faq-chev">▾</span></div><div class="faq-a"><div class="faq-a-inner">Yes — every tool is 100% free with no account required, no subscriptions, and no hidden fees. We're sustained by advertising.</div></div></div>
+      <div class="faq-item"><div class="faq-q">Can I download HD thumbnails? <span class="faq-chev">▾</span></div><div class="faq-a"><div class="faq-a-inner">Absolutely. Our Thumbnail Downloader fetches all five quality sizes including Max Resolution (1280×720). Note: HD may not be available for every video.</div></div></div>
+      <div class="faq-item"><div class="faq-q">How do the title, tag and description generators work? <span class="faq-chev">▾</span></div><div class="faq-a"><div class="faq-a-inner">They use intelligent template libraries combined with your input (topic, audience, tone) to produce realistic, high-quality results — no external API required.</div></div></div>
+      <div class="faq-item"><div class="faq-q">Does it work on mobile? <span class="faq-chev">▾</span></div><div class="faq-a"><div class="faq-a-inner">Yes. CreatorToolHub is fully responsive and works seamlessly on all screen sizes — phones, tablets, and desktops.</div></div></div>
+      <div class="faq-item"><div class="faq-q">Is there a usage limit? <span class="faq-chev">▾</span></div><div class="faq-a"><div class="faq-a-inner">None at all. Use any tool as many times as you need. We want every creator to have unlimited access to professional resources.</div></div></div>
+      <div class="faq-item"><div class="faq-q">What YouTube URL formats are supported? <span class="faq-chev">▾</span></div><div class="faq-a"><div class="faq-a-inner">We support all common formats: youtube.com/watch?v=ID, youtu.be/ID, youtube.com/shorts/ID, youtube.com/embed/ID, and plain 11-character video IDs.</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-grid">
+    <div>
+      <div class="logo" style="text-decoration:none;display:flex;align-items:center;gap:9px;">
+        <div class="logo-icon" style="width:32px;height:32px;font-size:.9rem;">🎬</div>
+        <span class="grad-text" style="font-size:1.1rem;font-weight:900;">CreatorToolHub</span>
+      </div>
+      <p class="footer-brand-desc">Free professional YouTube tools for every content creator. Grow your channel without spending a dollar.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Tools</h4>
+      <a href="#workspace" onclick="switchTab('thumb')">Thumbnail Downloader</a>
+      <a href="#workspace" onclick="switchTab('title')">Title Generator</a>
+      <a href="#workspace" onclick="switchTab('tag')">Tag Generator</a>
+      <a href="#workspace" onclick="switchTab('desc')">Description Generator</a>
+    </div>
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <a href="#blog">Blog</a><a href="#how">How It Works</a>
+      <a href="#faq">FAQ</a><a href="#">YouTube Tips</a>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <a href="#">Privacy Policy</a><a href="#">Terms of Use</a>
+      <a href="#">Cookie Policy</a><a href="#">Contact Us</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 CreatorToolHub. All rights reserved.</span>
+    <span>Made with ❤️ for YouTube creators worldwide</span>
+  </div>
+</footer>
+
+<script>
+'use strict';
+
+/* ═══════════════════════════════════
+   CORE UTILITIES
+═══════════════════════════════════ */
+let _toastTimer = null;
+
+function showToast(msg, type, icon) {
+  type = type || 'ok';
+  icon = icon || '✅';
+  var el  = document.getElementById('toast');
+  var ico = document.getElementById('t-icon');
+  var txt = document.getElementById('t-msg');
+  ico.textContent = icon;
+  txt.textContent = msg;
+  el.className = 'toast ' + type + ' show';
+  clearTimeout(_toastTimer);
+  _toastTimer = setTimeout(function(){ el.className = 'toast'; }, 3000);
+}
+
+function copyToClipboard(text, label) {
+  label = label || 'Copied to clipboard!';
+  // Modern API first
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(function(){
+      showToast(label, 'ok', '📋');
+    }).catch(function(){
+      fallbackCopy(text, label);
+    });
+  } else {
+    fallbackCopy(text, label);
+  }
+}
+
+function fallbackCopy(text, label) {
+  var ta = document.createElement('textarea');
+  ta.value = text;
+  ta.setAttribute('readonly', '');
+  ta.style.cssText = 'position:fixed;top:-9999px;left:-9999px;opacity:0;';
+  document.body.appendChild(ta);
+  ta.focus();
+  ta.select();
+  var ok = false;
+  try { ok = document.execCommand('copy'); } catch(e) { ok = false; }
+  document.body.removeChild(ta);
+  if (ok) {
+    showToast(label, 'ok', '📋');
+  } else {
+    showToast('Copy failed — please select text manually', 'err', '❌');
+  }
+}
+
+function sleep(ms) {
+  return new Promise(function(resolve){ setTimeout(resolve, ms); });
+}
+
+function showAlert(id) { document.getElementById(id).classList.add('show'); }
+function hideAlert(id) { document.getElementById(id).classList.remove('show'); }
+function showLoader(id) { document.getElementById(id).classList.add('show'); }
+function hideLoader(id) { document.getElementById(id).classList.remove('show'); }
+
+/* ═══════════════════════════════════
+   NAV / HAMBURGER
+═══════════════════════════════════ */
+document.getElementById('hamburger').addEventListener('click', function(){
+  document.getElementById('mobileNav').classList.toggle('open');
+});
+document.querySelectorAll('.mobile-nav a').forEach(function(a){
+  a.addEventListener('click', function(){
+    document.getElementById('mobileNav').classList.remove('open');
+  });
+});
+document.addEventListener('click', function(e){
+  if (!e.target.closest('.nav') && !e.target.closest('#mobileNav')) {
+    document.getElementById('mobileNav').classList.remove('open');
+  }
+});
+
+/* ═══════════════════════════════════
+   TABS
+═══════════════════════════════════ */
+function switchTab(tab) {
+  document.querySelectorAll('.ws-tab').forEach(function(b){
+    b.classList.toggle('active', b.dataset.tab === tab);
+  });
+  document.querySelectorAll('.ws-panel').forEach(function(p){
+    p.classList.toggle('active', p.id === 'panel-' + tab);
+  });
+}
+document.getElementById('wsTabs').addEventListener('click', function(e){
+  var btn = e.target.closest('.ws-tab');
+  if (btn) switchTab(btn.dataset.tab);
+});
+
+/* ═══════════════════════════════════
+   FAQ
+═══════════════════════════════════ */
+document.getElementById('faqList').addEventListener('click', function(e){
+  var q = e.target.closest('.faq-q');
+  if (!q) return;
+  q.parentElement.classList.toggle('open');
+});
+
+/* ═══════════════════════════════════
+   VIDEO ID EXTRACTOR
+═══════════════════════════════════ */
+function extractVideoId(url) {
+  if (!url) return null;
+  url = url.trim();
+  var patterns = [
+    /(?:youtube\.com\/watch\?(?:.*&)?v=)([a-zA-Z0-9_-]{11})/,
+    /(?:youtu\.be\/)([a-zA-Z0-9_-]{11})/,
+    /(?:youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/,
+    /(?:youtube\.com\/v\/)([a-zA-Z0-9_-]{11})/,
+    /(?:youtube\.com\/shorts\/)([a-zA-Z0-9_-]{11})/,
+    /(?:youtube\.com\/live\/)([a-zA-Z0-9_-]{11})/,
+    /^([a-zA-Z0-9_-]{11})$/
+  ];
+  for (var i = 0; i < patterns.length; i++) {
+    var m = url.match(patterns[i]);
+    if (m && m[1]) return m[1];
+  }
+  return null;
+}
+
+/* ═══════════════════════════════════
+   ① THUMBNAIL DOWNLOADER
+═══════════════════════════════════ */
+var QUALITIES = [
+  { key:'default',    file:'default.jpg',       label:'Default',        dims:'120 × 90',   hd:false },
+  { key:'medium',     file:'mqdefault.jpg',      label:'Medium Quality', dims:'320 × 180',  hd:false },
+  { key:'high',       file:'hqdefault.jpg',      label:'High Quality',   dims:'480 × 360',  hd:false },
+  { key:'standard',   file:'sddefault.jpg',      label:'Standard',       dims:'640 × 480',  hd:false },
+  { key:'maxres',     file:'maxresdefault.jpg',  label:'Max HD',         dims:'1280 × 720', hd:true  }
+];
+
+document.getElementById('thumbGenBtn').addEventListener('click', runThumb);
+document.getElementById('thumbClearBtn').addEventListener('click', function(){
+  document.getElementById('thumbUrl').value = '';
+  document.getElementById('thumb-result').innerHTML = '';
+  hideAlert('thumb-err');
+});
+document.getElementById('thumbPasteBtn').addEventListener('click', function(){
+  if (navigator.clipboard && navigator.clipboard.readText) {
+    navigator.clipboard.readText().then(function(t){
+      document.getElementById('thumbUrl').value = t;
+      showToast('Pasted from clipboard!', 'inf', '📋');
+    }).catch(function(){
+      document.getElementById('thumbUrl').focus();
+      showToast('Use Ctrl+V / Cmd+V to paste', 'inf', '💡');
+    });
+  } else {
+    document.getElementById('thumbUrl').focus();
+    showToast('Use Ctrl+V / Cmd+V to paste', 'inf', '💡');
+  }
+});
+document.getElementById('thumbUrl').addEventListener('keydown', function(e){
+  if (e.key === 'Enter') runThumb();
+});
+
+async function runThumb() {
+  hideAlert('thumb-err');
+  var url = document.getElementById('thumbUrl').value.trim();
+  var vid = extractVideoId(url);
+  if (!vid) { showAlert('thumb-err'); return; }
+  document.getElementById('thumb-result').innerHTML = '';
+  showLoader('thumb-loader');
+  await sleep(600);
+  hideLoader('thumb-loader');
+  renderThumbnails(vid);
+}
+
+function renderThumbnails(vid) {
+  var out = document.getElementById('thumb-result');
+
+  var hdr = document.createElement('div');
+  hdr.className = 'result-hdr';
+  hdr.innerHTML = '<span>✅ Thumbnails for video ID: <code style="color:var(--accentL)">' + vid + '</code></span>';
+  out.appendChild(hdr);
+
+  var grid = document.createElement('div');
+  grid.className = 'thumb-grid';
+
+  QUALITIES.forEach(function(q, i){
+    var imgUrl   = 'https://img.youtube.com/vi/' + vid + '/' + q.file;
+    var filename = 'thumbnail_' + vid + '_' + q.key + '.jpg';
+
+    var card = document.createElement('div');
+    card.className = 'tcard';
+    card.style.animation = 'fadeUp .45s ease ' + (i * 0.07) + 's both';
+
+    var img = document.createElement('img');
+    img.className = 'tcard-img';
+    img.alt = q.label;
+    img.loading = 'lazy';
+    img.src = imgUrl;
+    img.onerror = function(){ img.style.opacity = '.15'; img.title = 'Not available for this video'; };
+
+    var body = document.createElement('div');
+    body.className = 'tcard-body';
+
+    var ql = document.createElement('div');
+    ql.className = 'tcard-q';
+    ql.textContent = (q.hd ? '🏆 ' : '') + q.label;
+
+    var sz = document.createElement('div');
+    sz.className = 'tcard-sz';
+    sz.textContent = q.dims + ' px';
+
+    var btns = document.createElement('div');
+    btns.className = 'tcard-btns';
+
+    var dlBtn = document.createElement('button');
+    dlBtn.className = 'tdl-btn';
+    dlBtn.textContent = '⬇️ Download';
+    (function(u, f, b){
+      b.addEventListener('click', function(){ downloadImage(u, f, b); });
+    })(imgUrl, filename, dlBtn);
+
+    var openBtn = document.createElement('button');
+    openBtn.className = 'topen-btn';
+    openBtn.textContent = '🔗';
+    openBtn.title = 'Open in new tab';
+    (function(u){
+      openBtn.addEventListener('click', function(){
+        window.open(u, '_blank');
+        showToast('Opened in new tab', 'inf', '🔗');
+      });
+    })(imgUrl);
+
+    btns.appendChild(dlBtn);
+    btns.appendChild(openBtn);
+    body.appendChild(ql);
+    body.appendChild(sz);
+    body.appendChild(btns);
+    card.appendChild(img);
+    card.appendChild(body);
+    grid.appendChild(card);
+  });
+
+  out.appendChild(grid);
+}
+
+function downloadImage(url, filename, btn) {
+  btn.textContent = '⏳ Saving…';
+  btn.disabled = true;
+  fetch(url, { mode: 'cors' })
+    .then(function(r){
+      if (!r.ok) throw new Error('Network error');
+      return r.blob();
+    })
+    .then(function(blob){
+      var objUrl = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.style.display = 'none';
+      a.href = objUrl;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(function(){ URL.revokeObjectURL(objUrl); }, 5000);
+      showToast('Downloaded successfully!', 'ok', '⬇️');
+    })
+    .catch(function(){
+      window.open(url, '_blank');
+      showToast('Opened in new tab (browser security policy)', 'inf', 'ℹ️');
+    })
+    .finally(function(){
+      btn.textContent = '✅ Done';
+      btn.disabled = false;
+      setTimeout(function(){ btn.textContent = '⬇️ Download'; }, 2500);
+    });
+}
+
+/* ═══════════════════════════════════
+   ② TITLE GENERATOR
+═══════════════════════════════════ */
+var TITLE_TMPL = {
+  viral: [
+    "I Tried {topic} for 30 Days — The Results Shocked Everyone",
+    "Nobody Tells {audience} This About {topic} (Until Now)",
+    "The Dark Secret Behind {topic} That Will Change Everything",
+    "Stop Doing {topic} Wrong — Watch This Before It's Too Late",
+    "This {topic} Method Went Viral in {year} — Here's Why",
+    "Warning: Don't Try {topic} Before Watching This Video",
+    "I Exposed the Biggest {topic} Myths {audience} Still Believe",
+    "The Real Reason {audience} Fail at {topic} (And How to Fix It)",
+    "This One {topic} Trick Took Me From Zero to Hero",
+    "{topic} Is Broken — Here's What Actually Works in {year}"
+  ],
+  educational: [
+    "The Complete Beginner's Guide to {topic} in {year}",
+    "Understanding {topic}: Everything {audience} Need to Know",
+    "{topic} Explained Simply — Even Your Grandma Will Get It",
+    "How {topic} Actually Works: A Deep Dive for {audience}",
+    "The Science Behind {topic} and Why It Matters for {audience}",
+    "Master {topic} in Under 10 Minutes — {audience} Edition",
+    "{topic}: Key Concepts Every {audience} Must Understand",
+    "Breaking Down {topic} Step by Step for Total Beginners",
+    "A Complete No-Fluff Guide to {topic} for {audience}",
+    "Why {topic} Will Transform Your Life as a {audience}"
+  ],
+  entertaining: [
+    "I Challenged Myself to Do {topic} Every Day for a Month",
+    "Reacting to the Worst {topic} Advice on the Internet",
+    "{topic} Tier List — We Ranked Everything So You Don't Have To",
+    "A Day in My Life Doing {topic} as a {audience}",
+    "Rating the Most Ridiculous {topic} Fails on YouTube",
+    "We Tested EVERY {topic} Tip So {audience} Don't Have To",
+    "I Ruined {topic} So You Could Learn From My Mistakes",
+    "{topic} Expectations vs Reality — {audience} Edition",
+    "Honest Review: Is {topic} Really Worth It for {audience}?",
+    "My Embarrassing {topic} Journey (A Comedy Story)"
+  ],
+  howto: [
+    "How to Master {topic} in Less Than 30 Days (Step by Step)",
+    "How to {topic}: Complete Tutorial for {audience} in {year}",
+    "How I Went From Zero to Expert at {topic} (Full Breakdown)",
+    "How to Get Started With {topic} Even If You're a Total Beginner",
+    "How to Build a Bulletproof {topic} System for {audience}",
+    "How to Double Your {topic} Results Starting Tomorrow",
+    "How to Use {topic} to Transform Your Life as a {audience}",
+    "How to Fix Your Biggest {topic} Mistakes Once and For All",
+    "How to Learn {topic} Fast — The Method That Actually Works",
+    "How to Make Money With {topic}: Step-by-Step for {audience}"
+  ],
+  listicle: [
+    "10 {topic} Tips Every {audience} Must Know in {year}",
+    "7 Biggest {topic} Mistakes {audience} Keep Making (And Fixes)",
+    "5 Proven {topic} Strategies That Actually Deliver Results",
+    "15 Things Nobody Tells You About {topic}",
+    "Top 10 {topic} Tools for {audience} — {year} Edition",
+    "8 {topic} Hacks That Will Save You Hours Every Single Week",
+    "12 Mindblowing {topic} Facts That Experts Don't Share",
+    "Top 5 Reasons {audience} Should Start {topic} Right Now",
+    "6 {topic} Mistakes That Are Costing You Time and Money",
+    "20 Quick {topic} Wins for {audience} in {year}"
+  ],
+  motivational: [
+    "How {audience} Can Achieve {topic} No Matter What",
+    "You're One Decision Away From Mastering {topic}",
+    "Why {topic} Is the Best Investment {audience} Can Make in {year}",
+    "The {topic} Mindset That Changed Everything for Me",
+    "Stop Making Excuses and Start Your {topic} Journey Today",
+    "From Zero to Thriving: My {topic} Story for {audience}",
+    "Why Every {audience} Needs to Take {topic} Seriously in {year}",
+    "The {topic} Truth No One Wants to Hear (But You Need To)",
+    "I Almost Quit {topic} — Here's Why I'm Glad I Didn't",
+    "Your Future Self Will Thank You for Starting {topic} Today"
+  ]
+};
+
+// Store generated titles for safe copying
+var _currentTitles = [];
+
+document.getElementById('titleGenBtn').addEventListener('click', runTitles);
+document.getElementById('titleClearBtn').addEventListener('click', function(){
+  document.getElementById('title-result').innerHTML = '';
+  _currentTitles = [];
+});
+document.getElementById('titleTopic').addEventListener('keydown', function(e){
+  if (e.key === 'Enter') runTitles();
+});
+
+async function runTitles() {
+  hideAlert('title-err');
+  var topic    = document.getElementById('titleTopic').value.trim();
+  var audience = document.getElementById('titleAudience').value.trim() || 'Beginners';
+  var tone     = document.getElementById('titleTone').value;
+  if (!topic) { showAlert('title-err'); return; }
+
+  document.getElementById('title-result').innerHTML = '';
+  _currentTitles = [];
+  showLoader('title-loader');
+  await sleep(850);
+  hideLoader('title-loader');
+
+  var year   = new Date().getFullYear();
+  var tmpls  = TITLE_TMPL[tone] || TITLE_TMPL.viral;
+  var titles = tmpls.map(function(t){
+    return t
+      .replace(/{topic}/gi, topic)
+      .replace(/{audience}/gi, audience)
+      .replace(/{year}/gi, year);
+  });
+  _currentTitles = titles;
+
+  var out = document.getElementById('title-result');
+
+  var hdr = document.createElement('div');
+  hdr.className = 'result-hdr';
+  hdr.innerHTML = '<span>✅ 10 Generated Titles</span><span style="color:var(--text3);font-size:.72rem">Click any title to copy it</span>';
+  out.appendChild(hdr);
+
+  var list = document.createElement('div');
+  list.className = 'titles-list';
+
+  titles.forEach(function(t, i){
+    var item = document.createElement('div');
+    item.className = 'title-item';
+    item.style.animation = 'fadeUp .4s ease ' + (i * 0.055) + 's both';
+
+    var num  = document.createElement('span'); num.className = 'ti-num'; num.textContent = i + 1;
+    var txt  = document.createElement('span'); txt.className = 'ti-text'; txt.textContent = t;
+    var icon = document.createElement('span'); icon.className = 'ti-copy'; icon.textContent = '📋';
+
+    item.appendChild(num);
+    item.appendChild(txt);
+    item.appendChild(icon);
+    item.addEventListener('click', function(){
+      copyToClipboard(t, '📋 Title copied!');
+    });
+    list.appendChild(item);
+  });
+  out.appendChild(list);
+
+  // ✅ FIX: use addEventListener instead of inline onclick
+  var row = document.createElement('div');
+  row.className = 'btn-row';
+
+  var copyAllBtn = document.createElement('button');
+  copyAllBtn.className = 'action-btn ab-outline';
+  copyAllBtn.textContent = '📋 Copy All Titles';
+  copyAllBtn.addEventListener('click', function(){
+    copyToClipboard(_currentTitles.join('\n'), '📋 All 10 titles copied!');
+  });
+  row.appendChild(copyAllBtn);
+  out.appendChild(row);
+}
+
+/* ═══════════════════════════════════
+   ③ TAG GENERATOR
+═══════════════════════════════════ */
+var TAG_EXTRA = {
+  general:   ['tips','tricks','tutorial','guide','beginners','step by step','best','top','review','free','easy','fast','ultimate'],
+  tech:      ['technology','software','programming','coding','AI','app','smartphone','laptop','gadget','developer'],
+  gaming:    ['gameplay','walkthrough','gaming tips','PC gaming','console','esports','streamer','game review','gaming setup','lets play'],
+  finance:   ['make money','passive income','investing','stocks','crypto','budget','personal finance','wealth','financial freedom','side hustle'],
+  health:    ['workout','fitness','weight loss','nutrition','healthy eating','gym','mental health','wellness','exercise','diet plan'],
+  food:      ['recipe','cooking','easy meals','healthy food','baking','quick dinner','meal prep','restaurant review','street food','dessert'],
+  travel:    ['travel tips','travel guide','adventure','budget travel','solo travel','travel vlog','destination','flight tips','hotel','travel hacks'],
+  education: ['study tips','learning','online course','academic','exam prep','college','self improvement','skill building','knowledge','productivity'],
+  music:     ['music production','beatmaking','cover song','music tips','singer','songwriter','music review','playlist','instruments','studio'],
+  beauty:    ['makeup tutorial','skincare routine','beauty tips','haul','GRWM','fashion','style guide','outfit ideas','review','beauty hacks']
+};
+
+// Store generated tags for safe copying
+var _currentTags    = [];
+var _currentTagsStr = '';
+
+document.getElementById('tagGenBtn').addEventListener('click', runTags);
+document.getElementById('tagClearBtn').addEventListener('click', function(){
+  document.getElementById('tag-result').innerHTML = '';
+  _currentTags = [];
+  _currentTagsStr = '';
+});
+document.getElementById('tagKw').addEventListener('keydown', function(e){
+  if (e.key === 'Enter') runTags();
+});
+
+async function runTags() {
+  hideAlert('tag-err');
+  var kw  = document.getElementById('tagKw').value.trim();
+  var cat = document.getElementById('tagCat').value;
+  if (!kw) { showAlert('tag-err'); return; }
+
+  document.getElementById('tag-result').innerHTML = '';
+  _currentTags    = [];
+  _currentTagsStr = '';
+  showLoader('tag-loader');
+  await sleep(780);
+  hideLoader('tag-loader');
+
+  var year   = new Date().getFullYear();
+  var extras = TAG_EXTRA[cat] || TAG_EXTRA.general;
+  var set    = [];
+  var seen   = {};
+
+  function addTag(t) {
+    t = t.trim();
+    if (!t || seen[t]) return;
+    seen[t] = true;
+    set.push(t);
+  }
+
+  addTag(kw);
+  addTag(kw + ' tutorial');
+  addTag(kw + ' tips');
+  addTag(kw + ' guide');
+  addTag(kw + ' ' + year);
+  addTag('best ' + kw);
+  addTag(kw + ' for beginners');
+  addTag('how to ' + kw);
+  addTag(kw + ' step by step');
+  addTag(kw + ' explained');
+  extras.forEach(function(e){ addTag(kw + ' ' + e); });
+  addTag('learn ' + kw);
+  addTag(kw + ' hacks');
+  addTag('#' + kw.replace(/\s+/g, ''));
+
+  var tags    = set.slice(0, 20);
+  var tagStr  = tags.join(', ');
+  _currentTags    = tags;
+  _currentTagsStr = tagStr;
+
+  var out = document.getElementById('tag-result');
+
+  var hdr = document.createElement('div');
+  hdr.className = 'result-hdr';
+  hdr.innerHTML = '<span>✅ ' + tags.length + ' SEO Tags Generated</span>';
+  out.appendChild(hdr);
+
+  var countEl = document.createElement('div');
+  countEl.className = 'tag-count';
+  countEl.textContent = tagStr.length + ' / 500 characters · Click any tag to copy it individually';
+  out.appendChild(countEl);
+
+  var cloud = document.createElement('div');
+  cloud.className = 'tags-cloud';
+  tags.forEach(function(tag, i){
+    var pill = document.createElement('span');
+    pill.className = 'tag-pill';
+    pill.style.animation = 'fadeUp .35s ease ' + (i * 0.04) + 's both';
+    pill.textContent = tag;
+    pill.title = 'Click to copy this tag';
+    pill.addEventListener('click', function(){
+      copyToClipboard(tag, '🏷️ Tag copied: "' + tag + '"');
+    });
+    cloud.appendChild(pill);
+  });
+  out.appendChild(cloud);
+
+  // ✅ FIX: use addEventListener — NO inline onclick with injected strings
+  var row = document.createElement('div');
+  row.className = 'btn-row';
+
+  var copyAllBtn = document.createElement('button');
+  copyAllBtn.className = 'action-btn ab-primary';
+  copyAllBtn.textContent = '📋 Copy All Tags';
+  copyAllBtn.addEventListener('click', function(){
+    copyToClipboard(_currentTagsStr, '🏷️ All ' + _currentTags.length + ' tags copied!');
+  });
+
+  var copyLineBtn = document.createElement('button');
+  copyLineBtn.className = 'action-btn ab-outline';
+  copyLineBtn.textContent = '📄 Copy Line-by-Line';
+  copyLineBtn.addEventListener('click', function(){
+    copyToClipboard(_currentTags.join('\n'), '🏷️ Tags copied line-by-line!');
+  });
+
+  row.appendChild(copyAllBtn);
+  row.appendChild(copyLineBtn);
+  out.appendChild(row);
+
+  var tip = document.createElement('div');
+  tip.className = 'char-info';
+  tip.textContent = '💡 YouTube allows up to 500 characters for tags. You are using ' + tagStr.length + '.';
+  out.appendChild(tip);
+}
+
+/* ═══════════════════════════════════
+   ④ DESCRIPTION GENERATOR
+═══════════════════════════════════ */
+var HOOKS = {
+  tutorial:    function(t){ return '🎯 Want to master ' + t + '? You\'re in the right place. In this video, we break everything down step by step so you can get results fast.'; },
+  review:      function(t){ return '🔍 Looking for an honest, unfiltered review of ' + t + '? Look no further. We tested it so you don\'t have to.'; },
+  vlog:        function(t){ return '👋 Come along with us as we dive deep into ' + t + '! This is the video you\'ve been waiting for.'; },
+  list:        function(t){ return '🔥 These are the BEST insights on ' + t + ' you\'ll find anywhere. We\'ve done the research — you reap the rewards.'; },
+  interview:   function(t){ return '🎤 We sat down for an exclusive conversation all about ' + t + '. The insights shared here are pure gold.'; },
+  challenge:   function(t){ return '⚡ We took on the ultimate ' + t + ' challenge — and what happened next blew our minds. Watch till the end!'; },
+  documentary: function(t){ return '🎬 Buckle up. This is the deep-dive into ' + t + ' that no one else has made — until now.'; }
+};
+
+// Store generated description for safe copying
+var _currentDesc = '';
+
+document.getElementById('descGenBtn').addEventListener('click', runDesc);
+document.getElementById('descClearBtn').addEventListener('click', function(){
+  document.getElementById('desc-result').innerHTML = '';
+  _currentDesc = '';
+});
+document.getElementById('descTopic').addEventListener('keydown', function(e){
+  if (e.key === 'Enter') runDesc();
+});
+
+async function runDesc() {
+  hideAlert('desc-err');
+  var topic   = document.getElementById('descTopic').value.trim();
+  var channel = document.getElementById('descChannel').value.trim() || 'our channel';
+  var kwRaw   = document.getElementById('descKw').value.trim();
+  var type    = document.getElementById('descType').value;
+  if (!topic) { showAlert('desc-err'); return; }
+
+  document.getElementById('desc-result').innerHTML = '';
+  _currentDesc = '';
+  showLoader('desc-loader');
+  await sleep(950);
+  hideLoader('desc-loader');
+
+  var year   = new Date().getFullYear();
+  var kwArr  = kwRaw ? kwRaw.split(',').map(function(k){ return k.trim(); }).filter(Boolean) : [topic];
+  var kwLine = kwArr.join(', ');
+  var tags   = kwArr.slice(0, 8).map(function(k){ return '#' + k.replace(/\s+/g, ''); }).join(' ');
+  var hookFn = HOOKS[type] || HOOKS.tutorial;
+
+  var desc = hookFn(topic) + '\n\n' +
+    'In this video, we take a comprehensive look at ' + topic + '. Whether you\'re a complete beginner or looking to level up, this video is packed with actionable insights, real-world examples, and proven strategies that work in ' + year + '.\n\n' +
+    '━━━━━━━━━━━━━━━━━━━━━━━━━━━\n' +
+    '📌 WHAT YOU\'LL LEARN\n' +
+    '━━━━━━━━━━━━━━━━━━━━━━━━━━━\n' +
+    '✅ The foundations of ' + topic + ' and why it matters right now\n' +
+    '✅ A step-by-step breakdown you can follow today\n' +
+    '✅ Common mistakes to avoid (and how to fix them)\n' +
+    '✅ Advanced strategies from real experience\n' +
+    '✅ Tools and resources to accelerate your progress\n\n' +
+    '━━━━━━━━━━━━━━━━━━━━━━━━━━━\n' +
+    '⏱️ TIMESTAMPS\n' +
+    '━━━━━━━━━━━━━━━━━━━━━━━━━━━\n' +
+    '00:00 — Introduction\n' +
+    '01:30 — What is ' + topic + '?\n' +
+    '04:15 — Getting Started (Beginner Basics)\n' +
+    '08:40 — Core Strategies & Key Tips\n' +
+    '14:20 — Common Mistakes & How to Avoid Them\n' +
+    '19:05 — Advanced Tactics for Better Results\n' +
+    '23:50 — Final Thoughts & Action Steps\n\n' +
+    '━━━━━━━━━━━━━━━━━━━━━━━━━━━\n' +
+    '🔗 RESOURCES & LINKS\n' +
+    '━━━━━━━━━━━━━━━━━━━━━━━━━━━\n' +
+    '📂 Free Resources → [Link in pinned comment]\n' +
+    '🌐 Website → [Your website URL]\n' +
+    '📧 Business Inquiries → [Your email]\n\n' +
+    '━━━━━━━━━━━━━━━━━━━━━━━━━━━\n' +
+    '🔔 SUBSCRIBE & STAY CONNECTED\n' +
+    '━━━━━━━━━━━━━━━━━━━━━━━━━━━\n' +
+    'Subscribe to ' + channel + ' for weekly content on ' + kwLine + '. Hit the 🔔 notification bell so you never miss a video!\n\n' +
+    '👍 If this video helped you — LIKE it and SHARE it with someone who needs it. It genuinely helps the channel grow.\n\n' +
+    '💬 Drop your questions in the COMMENTS below. We read every single one!\n\n' +
+    '━━━━━━━━━━━━━━━━━━━━━━━━━━━\n' +
+    '🔎 KEYWORDS: ' + kwLine + '\n' +
+    '━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n' +
+    tags + ' #YouTube #Creator #' + year + '\n\n' +
+    '© ' + year + ' ' + channel + '. All rights reserved.';
+
+  _currentDesc = desc;
+
+  var out = document.getElementById('desc-result');
+
+  var hdr = document.createElement('div');
+  hdr.className = 'result-hdr';
+  hdr.innerHTML = '<span>✅ Generated Description</span><span style="color:var(--text3);font-size:.72rem">' + desc.length + ' characters</span>';
+  out.appendChild(hdr);
+
+  var box = document.createElement('div');
+  box.className = 'desc-box';
+  box.style.animation = 'fadeUp .45s ease both';
+  box.textContent = desc;
+  out.appendChild(box);
+
+  // ✅ FIX: use addEventListener — NO inline onclick with injected strings
+  var row = document.createElement('div');
+  row.className = 'btn-row';
+
+  var copyBtn = document.createElement('button');
+  copyBtn.className = 'action-btn ab-primary';
+  copyBtn.textContent = '📋 Copy Description';
+  copyBtn.addEventListener('click', function(){
+    copyToClipboard(_currentDesc, '📝 Description copied!');
+  });
+
+  var regenBtn = document.createElement('button');
+  regenBtn.className = 'action-btn ab-ghost';
+  regenBtn.textContent = '🔄 Regenerate';
+  regenBtn.addEventListener('click', runDesc);
+
+  row.appendChild(copyBtn);
+  row.appendChild(regenBtn);
+  out.appendChild(row);
+
+  var tip = document.createElement('div');
+  tip.className = 'char-info';
+  tip.textContent = '💡 YouTube descriptions support up to 5,000 characters. Yours: ' + desc.length + ' chars.';
+  out.appendChild(tip);
+}
+
+/* ═══════════════════════════════════
+   SCROLL REVEAL
+═══════════════════════════════════ */
+var revealObs = new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if (e.isIntersecting) {
+      e.target.style.opacity = '1';
+      e.target.style.animation = 'fadeUp .55s ease both';
+      revealObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.tool-card, .how-card, .blog-card, .faq-item').forEach(function(el){
+  el.style.opacity = '0';
+  revealObs.observe(el);
+});
+</script>
+</body>
+</html>
